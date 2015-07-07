@@ -53,10 +53,11 @@ def convert(url):
  				{1} -y""".format(input_path, output_path)
 
     try:
+        subprocess.check_output(shlex.split(ffmpeg_cmd))
 
-        p = subprocess.check_output(shlex.split(ffmpeg_cmd), bufsize=2048,
-                                       stdout=subprocess.PIPE,
-                                       stderr=subprocess.PIPE)
+        # p = subprocess.check_output(shlex.split(ffmpeg_cmd), bufsize=2048,
+        #                                stdout=subprocess.PIPE,
+        #                                stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:
         output = e.output
 
