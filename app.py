@@ -42,7 +42,7 @@ def convert(url):
         exc = ""
 
         input_file = url
-        output_file = url + "_converted"
+        output_file = url + "_converted.mp4"
 
         input_path = os.path.join(vidcon_root + input_dir, input_file)
         output_path = os.path.join(vidcon_root + output_dir, output_file)
@@ -57,13 +57,13 @@ def convert(url):
                                        stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE)
 
-        err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
-                   p.communicate((os.linesep).encode('utf-8')))
-        print(output)
-        print(err)
+        # err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
+        #            p.communicate((os.linesep).encode('utf-8')))
+        # print(output)
+        # print(err)
 
-        return_code = p.returncode
-        print(return_code)
+        # return_code = p.returncode
+        # print(return_code)
 
     except Exception:
         print("Unexpected error:", sys.exc_info()[0])
