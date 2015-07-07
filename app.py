@@ -29,45 +29,45 @@ from models import *
 
 def convert(url):
 
+
+    errors = []
+
+    # vidcon_root = '/Volumes/EdulearnNetUpload/asknlearn/vidcon/'
+
+    vidcon_root = '/media/edulearnupload/'
+
+    input_dir = 'input/'
+    output_dir = 'output/'
+    exc = ""
+
+    input_file = url
+    output_file = url + "_converted.mp4"
+
+    input_path = os.path.join(vidcon_root + input_dir, input_file)
+    output_path = os.path.join(vidcon_root + output_dir, output_file)
+
+    ffmpeg_cmd = """
+		ffmpeg 	-i {0} -c:v libx264 -crf 23 -profile:v baseline
+    			-level 3.0 -pix_fmt yuv420p -c:a aac -ac 2 -strict experimental -b:a 128k
+				-movflags faststart
+ 				{1} -y""".format(input_path, output_path)
+
     try:
 
-        errors = []
-
-        # vidcon_root = '/Volumes/EdulearnNetUpload/asknlearn/vidcon/'
-
-        vidcon_root = '/media/edulearnupload/'
-
-        input_dir = 'input/'
-        output_dir = 'output/'
-        exc = ""
-
-        input_file = url
-        output_file = url + "_converted.mp4"
-
-        input_path = os.path.join(vidcon_root + input_dir, input_file)
-        output_path = os.path.join(vidcon_root + output_dir, output_file)
-
-        ffmpeg_cmd = """
-    		ffmpeg 	-i {0} -c:v libx264 -crf 23 -profile:v baseline
-        			-level 3.0 -pix_fmt yuv420p -c:a aac -ac 2 -strict experimental -b:a 128k
-    				-movflags faststart
-     				{1} -y""".format(input_path, output_path)
-
-        p = subprocess.Popen(shlex.split(ffmpeg_cmd), bufsize=2048,
+        p = subprocess.check_output(shlex.split(ffmpeg_cmd), bufsize=2048,
                                        stdout=subprocess.PIPE,
                                        stderr=subprocess.PIPE)
+    except subprocess.CalledProcessError as e:
+        output = e.output
 
-        err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
-                   p.communicate((os.linesep).encode('utf-8')))
-        print(output)
-        print(err)
+    # err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
+    #            p.communicate((os.linesep).encode('utf-8')))
+    # print(output)
+    # print(err)
 
-        return_code = p.returncode
-        print(return_code)
+    # return_code = p.returncode
+    # print(return_code)
 
-    except Exception:
-        print("Unexpected error:", sys.exc_info()[0])
-        raise
     # result = Result(
     #     file_to_convert=url, 
     #     return_code=return_code,
