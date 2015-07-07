@@ -31,14 +31,16 @@ def convert(url):
 
     errors = []
 
-    vidcon_root = '/Volumes/EdulearnNetUpload/asknlearn/vidcon/'
+    # vidcon_root = '/Volumes/EdulearnNetUpload/asknlearn/vidcon/'
+
+    vidcon_root = '/media/edulearnupload/'
 
     input_dir = 'input/'
     output_dir = 'output/'
     exc = ""
 
-    input_file = 'test1.ogg'
-    output_file = 'out1.mp4'
+    input_file = url
+    output_file = url + "_converted"
 
     input_path = os.path.join(vidcon_root + input_dir, input_file)
     output_path = os.path.join(vidcon_root + output_dir, output_file)
@@ -55,15 +57,20 @@ def convert(url):
 
     err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
                p.communicate((os.linesep).encode('utf-8')))
+    print(output)
+    print(err)
 
     return_code = p.returncode
-    result = Result(
-        file_to_convert=url, 
-        return_code=return_code,
-        output1=output, 
-        output2=err)
-    db.session.add(result)
-    db.session.commit()
+    print(return_code)
+    if return_code > 0:
+        sys.exit(return_code)
+    # result = Result(
+    #     file_to_convert=url, 
+    #     return_code=return_code,
+    #     output1=output, 
+    #     output2=err)
+    # db.session.add(result)
+    # db.session.commit()
     return return_code
 
 
@@ -80,8 +87,6 @@ def index():
     if request.method == "POST":
         # get url that the person has entered
         url = request.form['url']
-        if 'http://' not in url[:7]:
-            url = 'http://' + url
         job = q.enqueue_call(
             func=convert, args=(url,), result_ttl=5000
         )
@@ -109,3 +114,4 @@ def index():
 
 if __name__ == '__main__':
     app.run()
+
