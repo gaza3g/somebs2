@@ -65,7 +65,7 @@ def convert(url):
         return_code = p.returncode
         print(return_code)
 
-    except:
+    except Exception:
         print("Unexpected error:", sys.exc_info()[0])
         raise
     # result = Result(
@@ -75,7 +75,7 @@ def convert(url):
     #     output2=err)
     # db.session.add(result)
     # db.session.commit()
-    return return_code
+    # return return_code
 
 
 
