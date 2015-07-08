@@ -31,7 +31,7 @@ def convert(url):
 
 
     errors = []
-    job = get_current_job():
+    job = get_current_job()
     print("Current job: {}".format(job.id))
 
     # vidcon_root = '/Volumes/EdulearnNetUpload/asknlearn/vidcon/'
