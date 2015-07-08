@@ -52,15 +52,16 @@ def convert(url):
 				-movflags faststart
  				{1} -y""".format(input_path, output_path)
 
-    # try:
-    output = subprocess.check_output(shlex.split(ffmpeg_cmd))
+    try:
+        output = subprocess.check_output(shlex.split(ffmpeg_cmd))
 
         # p = subprocess.check_output(shlex.split(ffmpeg_cmd), bufsize=2048,
         #                                stdout=subprocess.PIPE,
         #                                stderr=subprocess.PIPE)
-    #     print("Success: {}", output)
-    # except:
-    #     raise subprocess.CalledProcessError
+        print("Success: {}", output)
+    except CalledProcessError as ex:
+        print("Error: {}".format(ex.output))
+        # raise subprocess.CalledProcessError
         # print("Error")
 
     # err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
