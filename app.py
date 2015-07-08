@@ -58,12 +58,9 @@ def convert(url):
         # p = subprocess.check_output(shlex.split(ffmpeg_cmd), bufsize=2048,
         #                                stdout=subprocess.PIPE,
         #                                stderr=subprocess.PIPE)
-        print("Success {}".format(output)
-    except:
-    # except subprocess.CalledProcessError as e:
-        raise RuntimeError("Something bad happened")
-        # raise
-        # print("Error {}".format(e.output)
+        print("Success: {}", output)
+    except subprocess.CalledProcessError as e:
+        print("Error: {}", e.output)
 
     # err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
     #            p.communicate((os.linesep).encode('utf-8')))
