@@ -59,7 +59,7 @@ def convert(url):
         #                                stdout=subprocess.PIPE,
         #                                stderr=subprocess.PIPE)
         print("Success: {}", output)
-    except subprocess.CalledProcessError as e:
+    except:
         print("Error: {}", e.output)
 
     # err, output = map(lambda b: b.decode('utf-8').replace(os.linesep, '\n'),
