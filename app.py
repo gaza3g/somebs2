@@ -96,7 +96,7 @@ def index():
         # get url that the person has entered
         url = request.form['url']
         job = q.enqueue_call(
-            func=convert, args=(url,), result_ttl=5000
+            func=convert, args=(url,), result_ttl=5000, timeout=10800
         )
         print(job.get_id())
 
