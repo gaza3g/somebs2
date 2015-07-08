@@ -5,7 +5,7 @@ import shlex
 from flask import Flask, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask import jsonify
-from rq import Queue
+from rq import Queue, get_current_job
 from rq.job import Job
 from worker import conn
 
@@ -31,6 +31,8 @@ def convert(url):
 
 
     errors = []
+    job = get_current_job():
+    print("Current job: {}".format(job.id))
 
     # vidcon_root = '/Volumes/EdulearnNetUpload/asknlearn/vidcon/'
 
